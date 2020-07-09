@@ -1,0 +1,27 @@
+﻿<Window x:Class="TechnicalInspectionApp.TechInspectionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TechnicalInspectionApp"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Формирование" Height="450" Width="600">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Margin="0,0,0,2">Дата</TextBlock>
+                <DatePicker Style="{StaticResource DatePickerStyleValidate}" SelectedDate="{Binding Date, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Width="200"></DatePicker>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Margin="0,0,0,3">Водитель</TextBlock>
+                <ComboBox x:Name="cmbbxDriver" TextBoxBase.TextChanged="OnComboboxDriverTextChanged" IsTextSearchEnabled="False" IsEditable="True" Style="{StaticResource ComboBoxStyleValidate}" DisplayMemberPath="FIO" SelectedItem="{Binding SelectedDriver, ValidatesOnDataErrors=True}" ItemsSource="{Binding Drivers, UpdateSourceTrigger=PropertyChanged}" Width="200"></ComboBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Margin="0,0,0,3">Автомобиль</TextBlock>
+                <ComboBox x:Name="cmbbxCar" TextBoxBase.TextChanged="OnComboboxCarTextChanged" IsTextSearchEnabled="False" IsEditable="True" Style="{StaticResource ComboBoxStyleValidate}" DisplayMemberPath="StateNumber" SelectedItem="{Binding SelectedCar, ValidatesOnDataErrors=True}" ItemsSource="{Binding Cars, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Width="200"></ComboBox>
+            </StackPanel>
+            <Button Margin="0,20,0,0" Command="{Binding AddCommand}">Сформировать</Button>
+        </StackPanel>
+    </Grid>
+</Window>

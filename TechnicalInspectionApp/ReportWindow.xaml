@@ -1,0 +1,84 @@
+﻿<Window x:Class="TechnicalInspectionApp.ReportWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TechnicalInspectionApp"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Отчетность" Height="600" Width="1000">
+    <Window.Resources>
+        <local:BgReportColorConverter x:Key="BgReportColorConverter" />
+        <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="{Binding Status, Converter={StaticResource BgReportColorConverter}}" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Margin="10" Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Left">
+                <TextBlock Margin="0,0,0,3">Водитель</TextBlock>
+                <ComboBox x:Name="cmbbxDriver" TextBoxBase.TextChanged="OnComboboxDriverTextChanged" IsTextSearchEnabled="False" IsEditable="True"  DisplayMemberPath="FIO" SelectedItem="{Binding SelectedDriver}" ItemsSource="{Binding Drivers, UpdateSourceTrigger=PropertyChanged}" Width="200"></ComboBox>
+            </StackPanel>
+            <StackPanel Margin="10 0">
+                <TextBlock>Автомобиль</TextBlock>
+                <ComboBox x:Name="cmbbxCar" TextBoxBase.TextChanged="OnComboboxCarTextChanged" IsTextSearchEnabled="False" IsEditable="True" DisplayMemberPath="StateNumber" SelectedItem="{Binding SelectedCar, ValidatesOnDataErrors=True}" ItemsSource="{Binding Cars, UpdateSourceTrigger=PropertyChanged}" Width="200"></ComboBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,10,10,0">
+                <TextBlock Margin="0,5,5,0">C</TextBlock>
+                <DatePicker SelectedDate="{Binding StartDate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,10,10,0">
+                <TextBlock Margin="0,5,5,0">По</TextBlock>
+                <DatePicker  SelectedDate="{Binding EndDate, UpdateSourceTrigger=PropertyChanged}"></DatePicker>
+            </StackPanel>
+            <Button Command="{Binding FilterCommand}" Height="25" Width="80" Margin="10,9,0,0">Поиск</Button>
+        </StackPanel>
+        <DataGrid 
+            Grid.Row="1" 
+            AutoGenerateColumns="False"
+            BorderBrush="Transparent"
+            CanUserAddRows="False"
+            HeadersVisibility="Column"
+            IsReadOnly="True" 
+            ItemsSource="{Binding Reports, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <DataGrid.Columns>
+                <DataGridTextColumn
+                                Width="110*"
+                                Binding="{Binding Path=Status, Mode=TwoWay}"
+                                Header="Статус" />
+                <DataGridTextColumn
+                                Width="80"
+                                Binding="{Binding Path=TechInspection.Date, Mode=TwoWay, StringFormat='dd.MM.yyyy'}"
+                                Header="Дата" />
+                <DataGridTextColumn
+                                Width="80"
+                                Binding="{Binding Path=TechInspection.Car.StateNumber, Mode=TwoWay}"
+                                Header="Гос. номер" />
+                <DataGridTextColumn
+                                Width="100*"
+                                Binding="{Binding Path=TechInspection.Driver.FIO, Mode=TwoWay}"
+                                Header="Водитель" />
+                <DataGridTextColumn
+                                Width="90*"
+                                Binding="{Binding Path=TechInspection.Driver.DriverLicenseData, Mode=TwoWay}"
+                                Header="Вод. удостоверение" />
+                <DataGridTextColumn
+                                Width="90*"
+                                Binding="{Binding Path=TechInspection.Driver.DriverLicenseEndDate, Mode=TwoWay, StringFormat='dd.MM.yyyy'}"
+                                Header="Вод. удостов. до" />
+                <DataGridTextColumn
+                                Width="90*"
+                                Binding="{Binding Path=TechInspection.Car.TechnicalInspectionEndDate, Mode=TwoWay, StringFormat='dd.MM.yyyy'}"
+                                Header="Тех. осмотр до" />
+                <DataGridTextColumn
+                                Width="90*"
+                                Binding="{Binding Path=TechInspection.Car.InsuranseEndDate, Mode=TwoWay, StringFormat='dd.MM.yyyy'}"
+                                Header="Страховка до" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

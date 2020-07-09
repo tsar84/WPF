@@ -1,0 +1,27 @@
+﻿<Window x:Class="TechnicalInspectionApp.AddDriverWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TechnicalInspectionApp"
+        mc:Ignorable="d"
+        Title="Добавление водителя" Height="350" Width="400"
+        WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Margin="0,0,0,2">ФИО водителя</TextBlock>
+                <TextBox Style="{StaticResource TextBoxStyleValidate}" Text="{Binding FIO, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Width="200"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Margin="0,0,0,2">Серия и номер водит. удостоверения</TextBlock>
+                <TextBox Style="{StaticResource TextBoxStyleValidate}" CharacterCasing="Upper" Text="{Binding DriverLicenseData, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Width="200"></TextBox>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Margin="0,0,0,2">Дата окончания вод. удостоверения</TextBlock>
+                <DatePicker Style="{StaticResource DatePickerStyleValidate}" SelectedDate="{Binding DriverLicenseEndDate, ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}" Width="200"></DatePicker>
+            </StackPanel>
+            <Button Margin="0,20,0,0" Height="25" Command="{Binding AddCommand}">Сохранить</Button>
+        </StackPanel>
+    </Grid>
+</Window>
